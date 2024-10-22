@@ -36,6 +36,10 @@ if selected_game:
     matches = matches.index.tolist()
     matches = games_df.set_index('Title').loc[matches]
     matches.reset_index(inplace=True)
+    response_data = matches[['Title', 'Genre', 'Developer', 'Publisher', 'Plots', 'Link']].to_dict(orient='records')
+    
+    # Return JSON response
+    st.json(response_data)
 
     # Results
     cols = ['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
