@@ -19,7 +19,7 @@ st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot
 ph = st.sidebar.empty()
 
 # Pre-select a game programmatically
-default_game = '140'  # Example game title from the dataset
+default_game = '7 Billion Humans'  # Example game title from the dataset
 games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
 
 # Safely find the index of the default game in the dataset
