@@ -26,6 +26,7 @@ st.markdown("""
     <script src="app.js"></script>
 """, unsafe_allow_html=True)
 
+
 # Get query parameters
 query_params = st.experimental_get_query_params()
 default_game = query_params.get('game', [''])[0]  # Get the game title from the URL, default to empty string
