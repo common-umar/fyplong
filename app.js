@@ -7,3 +7,4 @@ document.getElementById('gameForm').addEventListener('submit', function(event) {
     // Redirect to the Streamlit app with the game title as a query parameter
     window.location.href = `/?game=${encodeURIComponent(gameTitle)}`;
 });
+
