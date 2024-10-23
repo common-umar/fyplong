@@ -23,7 +23,7 @@ default_game = 'The Legend of Zelda: Breath of the Wild'  # Example game from th
 selected_game = ph.selectbox(
     'Select one among the 787 games from the menu: (you can type it as well)',
     [''] + games_df['Title'].to_list(), 
-    index=games_df['Title'].tolist().index(default_game) + 1,  # Automatically select the game
+    index=games_df['Title'].tolist().index(default_game),  # Automatically select the game
     key='default',
     format_func=lambda x: 'Select a game' if x == '' else x
 )
