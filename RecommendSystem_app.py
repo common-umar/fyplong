@@ -17,9 +17,21 @@ st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/
 st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>', unsafe_allow_html=True)
 ph = st.sidebar.empty()
-selected_game = ph.selectbox('Select one among the 787 games from the menu: (you can type it as well)',
-                              [''] + games_df['Title'].to_list(), key='default',
-                              format_func=lambda x: 'Select a game' if x == '' else x)
+
+# Pre-select a game programmatically
+default_game = '140'  # Example game title from the dataset
+games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
+
+# Safely find the index of the default game in the dataset
+default_index = games_df['Title'].to_list().index(default_game) + 1  # +1 for the empty string
+
+selected_game = ph.selectbox(
+    'Select one among the 787 games from the menu: (you can type it as well)',
+    games_list, 
+    index=default_index,  # Use the calculated index with the empty string considered
+    key='default',
+    format_func=lambda x: 'Select a game' if x == '' else x
+)
 
 # Recommendations
 if selected_game:
