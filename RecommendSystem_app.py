@@ -17,16 +17,9 @@ st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/
 st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>', unsafe_allow_html=True)
 ph = st.sidebar.empty()
-
-# Pre-select a game programmatically
-default_game = 'The Legend of Zelda: Breath of the Wild'  # Example game from the dataset
-selected_game = ph.selectbox(
-    'Select one among the 787 games from the menu: (you can type it as well)',
-    [''] + games_df['Title'].to_list(), 
-    index=games_df['Title'].tolist().index(default_game),  # Automatically select the game
-    key='default',
-    format_func=lambda x: 'Select a game' if x == '' else x
-)
+selected_game = ph.selectbox('Select one among the 787 games from the menu: (you can type it as well)',
+                              [''] + games_df['Title'].to_list(), key='default',
+                              format_func=lambda x: 'Select a game' if x == '' else x)
 
 # Recommendations
 if selected_game:
@@ -35,7 +28,7 @@ if selected_game:
     # DF query
     matches = similarity_df[selected_game].sort_values()[1:6]
     matches = matches.index.tolist()
-    matches = games_df.set_index('Title').loc(matches)
+    matches = games_df.set_index('Title').loc[matches]
     matches.reset_index(inplace=True)
     
     # Prepare response data
@@ -62,4 +55,4 @@ else:
     st.text('')
     st.markdown("This app lets you select a game from the dropdown menu and you'll get five recommendations that are the closest to your game according to the gameplay and/or plot.")
     st.text('')
-    st.warning(':point_left: Select a game from the dropdown menu!')
+    st.warning(':point_left: Select a game from the dropdown menu!'
