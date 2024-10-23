@@ -1,3 +1,4 @@
+
 document.getElementById('gameForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -5,6 +6,7 @@ document.getElementById('gameForm').addEventListener('submit', function(event) {
     const gameTitle = document.getElementById('gameInput').value;
 
     // Redirect to the Streamlit app with the game title as a query parameter
-    window.location.href = `/?game=${encodeURIComponent(gameTitle)}`;
-});
+//    window.location.href = `/?game=${encodeURIComponent(gameTitle)}`;  // This opens in the current tab
 
+    window.open(`/?game=${encodeURIComponent(gameTitle)}`, '_blank');
+});
