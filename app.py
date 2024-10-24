@@ -22,6 +22,9 @@ ph = st.sidebar.empty()
 query_params = st.experimental_get_query_params()
 default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
 
+# Manually replace %20 with spaces (basic URL decoding for spaces only)
+default_game = default_game.replace('%20', ' ').title()
+
 games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
 
 # Safely find the index of the default game in the dataset
