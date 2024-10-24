@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import textwrap
+from urllib.parse import unquote  # To decode the URL-encoded game name
 
 # Load and Cache the data
 @st.cache_data(persist=True)
@@ -22,11 +23,18 @@ ph = st.sidebar.empty()
 query_params = st.experimental_get_query_params()
 default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
 
-games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
+# Decode and normalize the URL-encoded game name to lowercase for case-insensitive comparison
+default_game = unquote(default_game).lower()
 
-# Safely find the index of the default game in the dataset
-if default_game in games_list:
-    default_index = games_list.index(default_game)
+# Normalize the game titles in the dataset to lowercase for comparison
+games_df['Title_normalized'] = games_df['Title'].str.lower()
+
+# Check if the provided game name exists in the normalized list
+games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
+games_list_normalized = [''] + games_df['Title_normalized'].to_list()  # Normalized list
+
+if default_game in games_list_normalized:
+    default_index = games_list_normalized.index(default_game)
 else:
     default_index = 0  # Default to the first option ("Select a game")
 
