@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import textwrap
+from urllib.parse import unquote  # For proper URL decoding
 
 # Load and Cache the data
 @st.cache_data(persist=True)
@@ -18,12 +19,9 @@ st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>', unsafe_allow_html=True)
 ph = st.sidebar.empty()
 
-# Fetch game from URL query parameters
+# Fetch game from URL query parameters and decode it
 query_params = st.experimental_get_query_params()
-default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
-
-# Manually replace %20 with spaces (basic URL decoding for spaces only)
-default_game = default_game.replace('%20', ' ').title()
+default_game = unquote(query_params.get('game', [''])[0])  # Decode URL-encoded game name
 
 games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
 
