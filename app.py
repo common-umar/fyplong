@@ -11,6 +11,9 @@ def getdata():
 
 games_df, similarity_df = getdata()
 
+# Standardize game titles to lowercase for comparison
+games_df['lower_title'] = games_df['Title'].str.lower()
+
 # Sidebar
 st.sidebar.markdown('<strong><span style="color: #8B2500;font-size: 26px;"> Game recommendation</span></strong>', unsafe_allow_html=True)
 st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/)')
@@ -22,11 +25,14 @@ ph = st.sidebar.empty()
 query_params = st.experimental_get_query_params()
 default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
 
+# Lowercase the default game for comparison
+default_game_lower = default_game.lower()
+
 games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
 
-# Safely find the index of the default game in the dataset
-if default_game in games_list:
-    default_index = games_list.index(default_game)
+# Find the index of the default game in the dataset
+if default_game_lower in games_df['lower_title'].values:
+    default_index = games_df['lower_title'].tolist().index(default_game_lower) + 1  # +1 for the empty string
 else:
     default_index = 0  # Default to the first option ("Select a game")
 
