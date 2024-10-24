@@ -2,8 +2,15 @@ import streamlit as st
 import pandas as pd
 import textwrap
 
-st.header("Ahoy!") hide_st_style = """ <style> #MainMenu {visibility: hidden;} footer {visibility: hidden;} header {visibility: hidden;} </style> """
-st.markdown(hide_st_style, unsafe_allow_htm1=True)
+st.header(
+    """ 
+    <style> 
+    #MainMenu {visibility: hidden;} 
+    footer {visibility: hidden;} 
+    header {visibility: hidden;} 
+    </style> 
+    """
+)
 
 # Set background color to white (RGB)
 st.markdown(
