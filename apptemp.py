@@ -2,6 +2,18 @@ import streamlit as st
 import pandas as pd
 import textwrap
 
+# Set background color
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #EFF5EF;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Load and Cache the data
 @st.cache_data(persist=True)
 def getdata():
@@ -73,3 +85,4 @@ else:
     st.markdown("This app lets you select a game from the dropdown menu and you'll get five recommendations that are the closest to your game according to the gameplay and/or plot.")
     st.text('')
     st.warning(':point_left: Select a game from the dropdown menu!')
+
