@@ -38,4 +38,42 @@ for i, game in enumerate(games_list):
 selected_game = ph.selectbox(
     'Select one among the 787 games from the menu: (you can type it as well)',
     ['Select a game'] + games_list,  # Add "Select a game" as the first option
-    index=default_index + 1 if default_in
+    index=default_index + 1 if default_index > 0 else 0,  # Adjust index for 'Select a game'
+    key='default'
+)
+
+# Recommendations
+if selected_game != 'Select a game':  # Check that a game is selected
+    link = 'https://en.wikipedia.org' + games_df[games_df.Title == selected_game].Link.values[0]
+
+    # DF query for recommendations
+    matches = similarity_df[selected_game].sort_values()[1:6]
+    matches = matches.index.tolist()
+    matches = games_df.set_index('Title').loc[matches]
+    matches.reset_index(inplace=True)
+    
+    # Prepare response data
+    response_data = matches[['Title', 'Genre', 'Developer', 'Publisher', 'Plots', 'Link']].to_dict(orient='records')
+    
+    # Return JSON response
+    st.json(response_data)  # This will display JSON in the Streamlit app
+
+    # Results
+    cols = ['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
+    
+    st.markdown("# The recommended games for [{}]({}) are:".format(selected_game, link))
+    for idx, row in matches.iterrows():
+        st.markdown('### {} - {}'.format(str(idx + 1), row['Title']))
+        st.markdown(
+            '{} [[...]](https://en.wikipedia.org{})'.format(textwrap.wrap(row['Plots'][0:], 600)[0], row['Link']))
+        st.table(pd.DataFrame(row[cols]).T.set_index('Genre'))
+        st.markdown('Link to wiki page: [{}](https://en.wikipedia.org{})'.format(row['Title'], row['Link']))
+
+else:
+    st.markdown('# Game recommendation :video_game:')
+    st.text('')
+    st.markdown('> _So you have a Nintendo Switch, just finished an amazing game, and would like to get recommendations for similar games?_')
+    st.text('')
+    st.markdown("This app lets you select a game from the dropdown menu and you'll get five recommendations that are the closest to your game according to the gameplay and/or plot.")
+    st.text('')
+    st.warning(':point_left: Select a game from the dropdown menu!')
