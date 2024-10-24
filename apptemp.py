@@ -2,12 +2,12 @@ import streamlit as st
 import pandas as pd
 import textwrap
 
-# Set background color
+# Set background color to white (RGB)
 st.markdown(
     """
     <style>
     body {
-        background-color: #EFF5EF;
+        background-color: rgb(255, 255, 255);
     }
     </style>
     """,
