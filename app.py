@@ -18,17 +18,23 @@ st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>', unsafe_allow_html=True)
 ph = st.sidebar.empty()
 
-# Pre-select a game programmatically
-default_game = '140'  # Example game title from the dataset
+# Fetch game from URL query parameters
+query_params = st.experimental_get_query_params()
+default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
+
 games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
 
 # Safely find the index of the default game in the dataset
-default_index = games_df['Title'].to_list().index(default_game) + 1  # +1 for the empty string
+if default_game in games_list:
+    default_index = games_list.index(default_game)
+else:
+    default_index = 0  # Default to the first option ("Select a game")
 
+# Selectbox to choose game
 selected_game = ph.selectbox(
     'Select one among the 787 games from the menu: (you can type it as well)',
-    games_list, 
-    index=default_index,  # Use the calculated index with the empty string considered
+    games_list,
+    index=default_index,
     key='default',
     format_func=lambda x: 'Select a game' if x == '' else x
 )
