@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import textwrap
-from urllib.parse import unquote  # To decode the URL-encoded game name
 
 # Load and Cache the data
 @st.cache_data(persist=True)
@@ -22,9 +21,6 @@ ph = st.sidebar.empty()
 # Fetch game from URL query parameters
 query_params = st.experimental_get_query_params()
 default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
-
-# Decode the URL-encoded game name
-default_game = unquote(default_game)
 
 games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
 
@@ -74,4 +70,7 @@ else:
     st.markdown('# Game recommendation :video_game:')
     st.text('')
     st.markdown('> _So you have a Nintendo Switch, just finished an amazing game, and would like to get recommendations for similar games?_')
-    st.te
+    st.text('')
+    st.markdown("This app lets you select a game from the dropdown menu and you'll get five recommendations that are the closest to your game according to the gameplay and/or plot.")
+    st.text('')
+    st.warning(':point_left: Select a game from the dropdown menu!')
