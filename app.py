@@ -16,42 +16,22 @@ st.sidebar.markdown('<strong><span style="color: #8B2500;font-size: 26px;"> Game
 st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/)')
 st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>', unsafe_allow_html=True)
+ph = st.sidebar.empty()
 
-# HTML form for JavaScript
-st.markdown("""
-    <form id="gameForm">
-        <input type="text" id="gameInput" placeholder="Enter game title..." />
-        <input type="submit" value="Submit" />
-    </form>
-    <script src="app.js"></script>
-""", unsafe_allow_html=True)
-
-# Get query parameters and set default game in session state
-query_params = st.experimental_get_query_params()
-if 'game' in query_params:
-    game_title = query_params['game'][0]
-    # Store in session state
-    if 'selected_game' not in st.session_state:
-        st.session_state.selected_game = game_title
-
-# Allow users to override the game title in session state
-selected_game = st.session_state.get('selected_game', '')
-
-# Generate game list
+# Pre-select a game programmatically
+default_game = '140'  # Example game title from the dataset
 games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
-default_index = 0 if selected_game not in games_list else games_list.index(selected_game)
 
-selected_game = st.selectbox(
+# Safely find the index of the default game in the dataset
+default_index = games_df['Title'].to_list().index(default_game) + 1  # +1 for the empty string
+
+selected_game = ph.selectbox(
     'Select one among the 787 games from the menu: (you can type it as well)',
     games_list, 
-    index=default_index,
+    index=default_index,  # Use the calculated index with the empty string considered
     key='default',
     format_func=lambda x: 'Select a game' if x == '' else x
 )
-
-# Update session state when a game is selected
-if selected_game:
-    st.session_state.selected_game = selected_game
 
 # Recommendations
 if selected_game:
