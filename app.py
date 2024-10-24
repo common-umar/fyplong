@@ -2,6 +2,18 @@ import streamlit as st
 import pandas as pd
 import textwrap
 
+# Set background color to white (RGB)
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: rgb(255, 255, 255);
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Load and Cache the data
 @st.cache_data(persist=True)
 def getdata():
@@ -13,13 +25,6 @@ games_df, similarity_df = getdata()
 
 # Standardize game titles to lowercase for comparison
 games_df['lower_title'] = games_df['Title'].str.lower()
-
-# Sidebar
-st.sidebar.markdown('<strong><span style="color: #8B2500;font-size: 26px;"> Game recommendation</span></strong>', unsafe_allow_html=True)
-st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/)')
-st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
-st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>', unsafe_allow_html=True)
-ph = st.sidebar.empty()
 
 # Fetch game from URL query parameters
 query_params = st.experimental_get_query_params()
@@ -37,7 +42,7 @@ else:
     default_index = 0  # Default to the first option ("Select a game")
 
 # Selectbox to choose game
-selected_game = ph.selectbox(
+selected_game = st.selectbox(
     'Select one among the 787 games from the menu: (you can type it as well)',
     games_list,
     index=default_index,
