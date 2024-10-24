@@ -64,7 +64,7 @@ if selected_game:
     response_data = matches[['Title', 'Genre', 'Developer', 'Publisher', 'Plots', 'Link']].to_dict(orient='records')
     
     # Return JSON response
-    st.json(response_data)  # This will display JSON in the Streamlit app
+  #  st.json(response_data)  # This will display JSON in the Streamlit app
 
     # Results
     cols = ['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
