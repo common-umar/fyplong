@@ -11,36 +11,35 @@ def getdata():
 
 games_df, similarity_df = getdata()
 
-# Set a hardcoded game title (you can change this to test different games)
-DEFAULT_GAME_TITLE = "140"  # Change this to your desired game title
-
 # Sidebar
 st.sidebar.markdown('<strong><span style="color: #8B2500;font-size: 26px;"> Game recommendation</span></strong>', unsafe_allow_html=True)
 st.sidebar.markdown('An app by [Long Do](https://doophilong.github.io/Portfolio/)')
 st.sidebar.image('pexels-pixabay-275033.jpg', use_column_width=True)
 st.sidebar.markdown('<strong><span style="color: #EE4000;font-size: 26px;">:slot_machine: Choose your game !!!</span></strong>', unsafe_allow_html=True)
 
-# Get query parameters for game title
+# HTML form for JavaScript
+st.markdown("""
+    <form id="gameForm">
+        <input type="text" id="gameInput" placeholder="Enter game title..." />
+        <input type="submit" value="Submit" />
+    </form>
+    <script src="app.js"></script>
+""", unsafe_allow_html=True)
+
+# Get query parameters and set default game in session state
 query_params = st.experimental_get_query_params()
 if 'game' in query_params:
-    selected_game = query_params['game'][0]
-else:
-    selected_game = DEFAULT_GAME_TITLE  # Use the hardcoded title as default
+    game_title = query_params['game'][0]
+    # Store in session state
+    if 'selected_game' not in st.session_state:
+        st.session_state.selected_game = game_title
 
-# Update session state for selected game
-if 'selected_game' not in st.session_state:
-    st.session_state.selected_game = selected_game
-
-# Text input for game title
-game_title_input = st.text_input("Enter a game title:", value=st.session_state.selected_game)
-
-# Button to submit the title
-if st.button("Get Recommendations"):
-    st.session_state.selected_game = game_title_input  # Update the session state
+# Allow users to override the game title in session state
+selected_game = st.session_state.get('selected_game', '')
 
 # Generate game list
 games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
-default_index = 0 if st.session_state.selected_game not in games_list else games_list.index(st.session_state.selected_game)
+default_index = 0 if selected_game not in games_list else games_list.index(selected_game)
 
 selected_game = st.selectbox(
     'Select one among the 787 games from the menu: (you can type it as well)',
@@ -55,11 +54,11 @@ if selected_game:
     st.session_state.selected_game = selected_game
 
 # Recommendations
-if st.session_state.selected_game:
-    link = 'https://en.wikipedia.org' + games_df[games_df.Title == st.session_state.selected_game].Link.values[0]
+if selected_game:
+    link = 'https://en.wikipedia.org' + games_df[games_df.Title == selected_game].Link.values[0]
 
     # DF query
-    matches = similarity_df[st.session_state.selected_game].sort_values()[1:6]
+    matches = similarity_df[selected_game].sort_values()[1:6]
     matches = matches.index.tolist()
     matches = games_df.set_index('Title').loc[matches]
     matches.reset_index(inplace=True)
@@ -73,7 +72,7 @@ if st.session_state.selected_game:
     # Results
     cols = ['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
     
-    st.markdown("# The recommended games for [{}]({}) are:".format(st.session_state.selected_game, link))
+    st.markdown("# The recommended games for [{}]({}) are:".format(selected_game, link))
     for idx, row in matches.iterrows():
         st.markdown('### {} - {}'.format(str(idx + 1), row['Title']))
         st.markdown(
