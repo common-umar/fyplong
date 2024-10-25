@@ -10,7 +10,8 @@ st.markdown(
     body {
         background-color: rgb(255, 255, 255);
     }
-    ._terminalButton_rix23_138 {
+    ._terminalButton_rix23_138,
+    ._terminalButton_rix23_138 * {
         display: none !important;
     }
     </style>
