@@ -3,23 +3,20 @@ import pandas as pd
 import textwrap
 
 
-# Set background color to white (RGB)
+# Custom CSS to hide specific button and set background color to white
 st.markdown(
     """
     <style>
     body {
         background-color: rgb(255, 255, 255);
     }
-
     ._terminalButton_rix23_138 {
         display: none !important;
-        visibility: hidden;
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-
 # Load and Cache the data
 @st.cache_data(persist=True)
 def getdata():
