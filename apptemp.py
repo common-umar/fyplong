@@ -18,6 +18,7 @@ hide_github_icon = """
 }
 """
 
+st.markdown(hide_github_icon, unsafe_allow_html=True)
 # Set background color to white (RGB)
 st.markdown(
     """
