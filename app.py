@@ -4,12 +4,15 @@ import textwrap
 
 
 # Custom CSS to hide specific button and set background color to white
+# Custom CSS to hide header and specific button, and set background color to white
 st.markdown(
     """
     <style>
     body {
         background-color: rgb(255, 255, 255);
     }
+    .stAppHeader,
+    .stToolbarActionButton,
     ._terminalButton_rix23_138,
     ._terminalButton_rix23_138 * {
         display: none !important;
@@ -17,8 +20,7 @@ st.markdown(
     </style>
     """,
     unsafe_allow_html=True
-)
-# Load and Cache the data
+)# Load and Cache the data
 @st.cache_data(persist=True)
 def getdata():
     games_df = pd.read_csv('Games_dataset.csv', index_col=0)
