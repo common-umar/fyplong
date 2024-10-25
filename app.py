@@ -3,16 +3,6 @@ import pandas as pd
 import textwrap
 
 
-st.header(
-    """ 
-    <style> 
-    #MainMenu {visibility: hidden;} 
-    footer {visibility: hidden;} 
-    header {visibility: hidden;} 
-    </style> 
-    """
-)
-
 # Set background color to white (RGB)
 st.markdown(
     """
