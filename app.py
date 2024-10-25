@@ -12,7 +12,9 @@ st.markdown(
     }
     .stAppHeader,
     .stToolbarActionButton,
-    ._terminalButton_rix23_138 {
+    ._terminalButton_rix23_138,
+    ._profileContainer_1yi6l_53,
+    ._container_1yi6l_1 {
         display: none !important;
     }
     </style>
