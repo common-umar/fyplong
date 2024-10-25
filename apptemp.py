@@ -11,6 +11,12 @@ st.header(
     </style> 
     """
 )
+# Add custom CSS to hide the GitHub icon
+hide_github_icon = """
+#GithubIcon {
+  visibility: hidden;
+}
+"""
 
 # Set background color to white (RGB)
 st.markdown(
