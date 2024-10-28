@@ -7,29 +7,29 @@ import textwrap
 st.markdown(
     """
     <style>
-
-   /* Import Montserrat font from Google Fonts */
+    /* Import Montserrat font from Google Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
- 
+
     /* Make background transparent */
     .stApp {
         background-color: transparent !important;
     }
 
-    body {
+    /* Apply transparent background and Montserrat font to the entire body */
+    html, body, .stApp {
         background-color: rgba(255, 255, 255, 0) !important;
         color: transparent !important;
         font-family: 'Montserrat', sans-serif !important;
         font-weight: 700 !important;
     }
 
-    /* Set transparent text color and custom font */
+    /* Apply Montserrat font and transparent color to all main text elements */
     .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
         color: transparent !important;
-        font-family: "Montserrat", sans-serif !important;
+        font-family: 'Montserrat', sans-serif !important;
     }
 
-  
+    /* Hide specific header and buttons */
     .stAppHeader,
     .stToolbarActionButton,
     ._terminalButton_rix23_138,
@@ -37,9 +37,11 @@ st.markdown(
     ._container_1yi6l_1 {
         display: none !important;
     }
+
+    /* Adjust main container padding */
     .st-emotion-cache-13ln4jf {
         width: 100%;
-        padding: 0rem 1rem 10rem;  /* Updated padding */
+        padding: 0rem 1rem 10rem;
         max-width: 46rem;
     }
     </style>
