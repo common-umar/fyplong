@@ -6,44 +6,45 @@ import textwrap
 # Custom CSS to hide header and specific button, and set background color to white
 st.markdown(
     """
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
     <style>
-    /* Import Montserrat font from Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+        /* Make background transparent */
+        .stApp {
+            background-color: transparent !important;
+        }
 
-    /* Make background transparent */
-    .stApp {
-        background-color: transparent !important;
-    }
+        /* Apply transparent background and Montserrat font to the entire body */
+        html, body, .stApp {
+            background-color: rgba(255, 255, 255, 0) !important;
+            color: transparent !important;
+            font-family: 'Montserrat', sans-serif !important;
+            font-weight: 700 !important;
+        }
 
-    /* Apply transparent background and Montserrat font to the entire body */
-    html, body, .stApp {
-        background-color: rgba(255, 255, 255, 0) !important;
-        color: transparent !important;
-        font-family: 'Montserrat', sans-serif !important;
-        font-weight: 700 !important;
-    }
+        /* Apply Montserrat font and transparent color to all main text elements */
+        .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
+            color: transparent !important;
+            font-family: 'Montserrat', sans-serif !important;
+        }
 
-    /* Apply Montserrat font and transparent color to all main text elements */
-    .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
-        color: transparent !important;
-        font-family: 'Montserrat', sans-serif !important;
-    }
+        /* Hide specific header and buttons */
+        .stAppHeader,
+        .stToolbarActionButton,
+        ._terminalButton_rix23_138,
+        ._profileContainer_1yi6l_53,
+        ._container_1yi6l_1 {
+            display: none !important;
+        }
 
-    /* Hide specific header and buttons */
-    .stAppHeader,
-    .stToolbarActionButton,
-    ._terminalButton_rix23_138,
-    ._profileContainer_1yi6l_53,
-    ._container_1yi6l_1 {
-        display: none !important;
-    }
-
-    /* Adjust main container padding */
-    .st-emotion-cache-13ln4jf {
-        width: 100%;
-        padding: 0rem 1rem 10rem;
-        max-width: 46rem;
-    }
+        /* Adjust main container padding */
+        .st-emotion-cache-13ln4jf {
+            width: 100%;
+            padding: 0rem 1rem 10rem;
+            max-width: 46rem;
+        }
     </style>
     """,
     unsafe_allow_html=True
