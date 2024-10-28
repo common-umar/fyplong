@@ -18,9 +18,10 @@ st.markdown(
         background-color: rgba(255, 255, 255, 0) !important;
     }
 
-    /* Make text transparent */
+    /* Set transparent text color and custom font */
     .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
-        color: rgba(0, 0, 0, 0) !important;
+        color: transparent !important;
+        font-family: "Montserrat", sans-serif !important;
     }
 
   
