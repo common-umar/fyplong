@@ -8,6 +8,9 @@ st.markdown(
     """
     <style>
 
+   /* Import Montserrat font from Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+ 
     /* Make background transparent */
     .stApp {
         background-color: transparent !important;
