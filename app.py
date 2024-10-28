@@ -24,6 +24,15 @@ st.markdown(
             font-weight: 700 !important;
         }
 
+    body h1, 
+body h2, 
+body h3, 
+body h4, 
+body h5, 
+body h6 {
+  font-family: "Montserrat-Bold", sans-serif !important;
+}
+
         /* Apply Montserrat font and transparent color to all main text elements */
         .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
             color: transparent !important;
