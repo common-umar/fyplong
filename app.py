@@ -12,7 +12,11 @@ st.markdown(
     .stApp {
         background-color: transparent !important;
     }
-    
+
+    /* Remove background color for the main body */
+    body {
+        background-color: rgba(255, 255, 255, 0) !important;
+    }
 
   
     .stAppHeader,
