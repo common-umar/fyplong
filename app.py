@@ -7,9 +7,17 @@ import textwrap
 st.markdown(
     """
     <style>
-    body {
-        background-color: rgb(255, 255, 255);
+    
+    /* Make background transparent */
+    .stApp {
+        background-color: transparent !important;
     }
+    
+    /* Remove background color for the main body */
+    body {
+        background-color: rgba(255, 255, 255, 0) !important;
+    }
+    
     .stAppHeader,
     .stToolbarActionButton,
     ._terminalButton_rix23_138,
