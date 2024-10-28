@@ -13,9 +13,11 @@ st.markdown(
         background-color: transparent !important;
     }
 
-    /* Remove background color for the main body */
     body {
         background-color: rgba(255, 255, 255, 0) !important;
+        color: transparent !important;
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 700 !important;
     }
 
     /* Set transparent text color and custom font */
