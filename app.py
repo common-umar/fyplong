@@ -41,15 +41,7 @@ st.markdown(
             font-family: 'Montserrat', sans-serif !important;
         }
 
-.stWidget {
-    color: purple !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
 
-.stButton {
-    color: gold !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
 
         
         /* Hide specific header and buttons */
