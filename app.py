@@ -60,66 +60,46 @@ def getdata():
 
 games_df, similarity_df = getdata()
 
-# Standardize game titles and genres to lowercase for comparison
+# Add a column for lowercase genre for comparison
 games_df['lower_title'] = games_df['Title'].str.lower()
 games_df['lower_genre'] = games_df['Genre'].str.lower()
 
 # Fetch game or genre from URL query parameters
 query_params = st.experimental_get_query_params()
-default_game_or_genre = query_params.get('game', [''])[0].lower()  # Default to empty string if 'game' not in query
+input_value = query_params.get('game', [''])[0].lower()  # Convert input to lowercase
 
-games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
-genres_list = games_df['Genre'].unique().tolist()
+# Check if the input is a genre or a game title
+is_genre = input_value in games_df['lower_genre'].values
+is_game = input_value in games_df['lower_title'].values
 
-# Check if input matches a game title or genre
-if default_game_or_genre in games_df['lower_title'].values:
-    selected_type = 'game'
-    default_index = games_df['lower_title'].tolist().index(default_game_or_genre) + 1  # +1 for empty string
-elif default_game_or_genre in games_df['lower_genre'].values:
-    selected_type = 'genre'
-else:
-    selected_type = None
-    default_index = 0  # Default to first option ("Select a game")
+# If the input is a genre, recommend 5 games in that genre
+if is_genre:
+    selected_genre = input_value.capitalize()
+    genre_matches = games_df[games_df['lower_genre'] == input_value].head(5)  # Select the first 5 matches
 
-# Selectbox for game selection
-selected_game_or_genre = st.selectbox(
-    'Select a game or enter a genre for recommendations:',
-    games_list,
-    index=default_index,
-    key='default',
-    format_func=lambda x: 'Select a game or genre' if x == '' else x
-)
-
-# Show recommendations based on game or genre
-if selected_game_or_genre:
-    if selected_type == 'game':
-        # Get recommendations based on selected game
-        link = 'https://en.wikipedia.org' + games_df[games_df.Title == selected_game_or_genre].Link.values[0]
-        matches = similarity_df[selected_game_or_genre].sort_values()[1:6].index.tolist()
-        matches = games_df.set_index('Title').loc[matches]
-        matches.reset_index(inplace=True)
-        recommendations = matches[['Title', 'Genre', 'Developer', 'Publisher', 'Plots', 'Link']].to_dict(orient='records')
+    st.markdown(f"# Recommended games in the {selected_genre} genre:")
+    for idx, row in genre_matches.iterrows():
+        st.markdown(f'### {row["Title"]}')
+        st.markdown(f'{textwrap.wrap(row["Plots"], 600)[0]} [[Read more]](https://en.wikipedia.org{row["Link"]})')
         
-        st.markdown("# Recommended games for [{}]({}) are:".format(selected_game_or_genre, link))
-        
-    elif selected_type == 'genre':
-        # Get recommendations based on selected genre
-        genre_matches = games_df[games_df['lower_genre'] == default_game_or_genre].sample(5)  # Random 5 games in genre
-        recommendations = genre_matches[['Title', 'Genre', 'Developer', 'Publisher', 'Plots', 'Link']].to_dict(orient='records')
-        
-        st.markdown(f"# Recommended games in genre '{selected_game_or_genre.capitalize()}':")
+# If the input is a game title, proceed with the current recommendation logic
+elif is_game:
+    selected_game = input_value.capitalize()
+    link = 'https://en.wikipedia.org' + games_df[games_df.lower_title == selected_game].Link.values[0]
     
-    # Display recommendations
-    for idx, game in enumerate(recommendations):
-        st.markdown(f"### {idx + 1}. {game['Title']} - {game['Genre']}")
-        st.markdown('{} [[...]](https://en.wikipedia.org{})'.format(textwrap.wrap(game['Plots'], 600)[0], game['Link']))
-        cols = ['Genre', 'Developer', 'Publisher']
-        st.table(pd.DataFrame([game]).T.loc[cols])
-        st.markdown(f"Link to wiki page: [{game['Title']}]({game['Link']})")
+    # DF query for similar games
+    matches = similarity_df[selected_game].sort_values()[1:6]
+    matches = matches.index.tolist()
+    matches = games_df.set_index('Title').loc[matches]
+    matches.reset_index(inplace=True)
 
+    # Display recommended games
+    st.markdown(f"# The recommended games for [{selected_game}]({link}) are:")
+    for idx, row in matches.iterrows():
+        st.markdown(f'### {row["Title"]}')
+        st.markdown(f'{textwrap.wrap(row["Plots"], 600)[0]} [[Read more]](https://en.wikipedia.org{row["Link"]})')
+
+# If input is neither a genre nor a game title, display the default message
 else:
-    # Default instructions if no game or genre is selected
-    st.markdown('# Game Recommendation :video_game:')
-    st.text('')
-    st.markdown('> _Select a game or genre from the dropdown menu for personalized recommendations._')
-    st.warning(':point_left: Select a game or enter a genre in the input box!')
+    st.markdown('# Game recommendation :video_game:')
+    st.markdown('> _Select a game or genre from the dropdown menu or URL to get recommendations!_')
