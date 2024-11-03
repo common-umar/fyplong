@@ -74,13 +74,22 @@ else:
     default_index = 0  # Default to first option ("Select a game")
 
 # Selectbox for game selection
-selected_game_or_genre = st.selectbox(
-    'Select a game or enter a genre for recommendations:',
-    games_list,
-    index=default_index,
-    key='default',
-    format_func=lambda x: 'Select a game or genre' if x == '' else x
-)
+if 0 <= default_index < len(games_list):
+    selected_game = st.selectbox(
+        'Select one among the 787 games from the menu: (you can type it as well)',
+        games_list,
+        index=default_index,
+        key='default',
+        format_func=lambda x: 'Select a game' if x == '' else x
+    )
+else:
+    selected_game = st.selectbox(
+        'Select one among the 787 games from the menu: (you can type it as well)',
+        games_list,
+        index=0,  # Default to the first option ("Select a game") if out of range
+        key='default',
+        format_func=lambda x: 'Select a game' if x == '' else x
+    )
 
 # Show recommendations based on game or genre
 if selected_game_or_genre:
