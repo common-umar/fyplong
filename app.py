@@ -135,4 +135,3 @@ else:
     st.text('')
     st.warning(':point_left: Select a game from the dropdown menu!')
 
-this is my current stream app code
