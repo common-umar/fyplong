@@ -1,69 +1,45 @@
 import streamlit as st
 import pandas as pd
+import textwrap
 
-# Load the CSV file
+# Load the dataset (make sure the path is correct)
 games_df = pd.read_csv('games.csv')
 
-# Preprocess data: create a lowercase title for matching
-games_df['lower_title'] = games_df['Title'].str.lower()
-
-# Streamlit app layout
+# Set up the title and description of the app
 st.title("Game Recommendation System")
-mode = st.sidebar.selectbox("Select mode", ["light", "dark"])
+st.write("Enter a game name or a genre to get recommendations!")
 
-# Set the background color based on the mode
-if mode == "dark":
-    st.markdown(
-        """
-        <style>
-        body {
-            background-color: #1e1e1e;
-            color: white;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
-else:
-    st.markdown(
-        """
-        <style>
-        body {
-            background-color: white;
-            color: black;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True,
-    )
+# Input for game name or genre
+user_input = st.text_input("Game Name or Genre", "").strip()
 
-# User input for game title or genre
-input_text = st.text_input("Enter a game name or genre:")
+# Function to recommend games based on input
+def recommend_games(input_value):
+    # First, check if the input is a genre or a game name
+    genre_recommendation = games_df[games_df['Genre'].str.contains(input_value, case=False)]
+    game_recommendation = games_df[games_df['Title'].str.contains(input_value, case=False)]
 
-if input_text:
-    # Check if input is a genre or a game title
-    if input_text.lower() in games_df['Genre'].str.lower().values:
-        # If input is a genre, get games of that genre
-        recommended_games = games_df[games_df['Genre'].str.lower() == input_text.lower()]
-    elif input_text.lower() in games_df['lower_title'].values:
-        # If input is a game title, get the specific game
-        selected_game = games_df[games_df['lower_title'] == input_text.lower()]
-        link = 'https://en.wikipedia.org' + selected_game['Link'].values[0]
-        genre = selected_game['Genre'].values[0]
+    # If the input is a genre, show 5 games from that genre
+    if not genre_recommendation.empty:
+        st.write(f"Here are some games in the genre '{input_value}':")
+        for index, row in genre_recommendation.iterrows():
+            st.write(f"- {row['Title']} (Released in: {row['Released in: Japan']})")
+        if len(genre_recommendation) == 0:
+            st.write("No games found in this genre.")
 
-        # Get 5 recommended games of the same genre
-        recommended_games = games_df[games_df['Genre'] == genre].sample(n=5)
-        
-        # Display selected game and link
-        st.write(f"### Recommended Game: {selected_game['Title'].values[0]}")
-        st.write(f"[Link to Wikipedia]({link})")
+    # If the input is a game name, show the details for that game
+    elif not game_recommendation.empty:
+        selected_game = game_recommendation.iloc[0]
+        link = 'https://en.wikipedia.org' + selected_game['Link']
+        st.write(f"Details for **{selected_game['Title']}**:")
+        st.write(f"- Genre: {selected_game['Genre']}")
+        st.write(f"- Developer: {selected_game['Developer']}")
+        st.write(f"- Publisher: {selected_game['Publisher']}")
+        st.write(f"- Released in: Japan: {selected_game['Released in: Japan']}, North America: {selected_game['North America']}, Rest of countries: {selected_game['Rest of countries']}")
+        st.write(f"- Plot: {selected_game['Plots']}")
+        st.write(f"[More info here]({link})")
     else:
-        # If neither, return an error message
-        st.write("No matching game or genre found. Please try again.")
-        recommended_games = pd.DataFrame()  # Empty DataFrame for no recommendations
+        st.write("No games found with that name or genre.")
 
-    # Display recommended games if available
-    if not recommended_games.empty:
-        st.write("### Recommended Games:")
-        for index, row in recommended_games.iterrows():
-            st.write(f"- **{row['Title']}** (Genre: {row['Genre']})")
+# When the user submits the input
+if user_input:
+    recommend_games(user_input)
