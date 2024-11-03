@@ -2,63 +2,37 @@ import streamlit as st
 import pandas as pd
 import textwrap
 
+# Custom CSS for light and dark mode
+if mode == 'dark':
+    text_color = "#ffffff"  # Light text for dark mode
+else:  # Light mode as default
+    text_color = "#000000"  # Dark text for light mode
 
-# Custom CSS to hide header and specific button, and set background color to white
+# Apply CSS styling based on the mode
 st.markdown(
-    """
+    f"""
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
     <style>
-        /* Make background transparent */
-        .stApp {
+        /* Transparent background and font styling based on mode */
+        .stApp {{
             background-color: transparent !important;
-        }
+            color: {text_color} !important;
+            font-family: 'Montserrat', sans-serif;
+        }}
 
-
-        h1, h2, h3, h4, h5, h6 {
+        /* Header and button text color based on mode */
+        h1, h2, h3, h4, h5, h6 {{
             font-family: 'Montserrat', sans-serif !important;
-            color: transparent !important;
-       }
+            color: {text_color} !important;
+        }}
 
-            /* Apply transparent background and Montserrat font to the entire body */
-            html, body, .stApp {
-                background-color: rgba(255, 255, 255, 0) !important;
-                color: transparent !important;
-                font-family: 'Montserrat', sans-serif !important;
-                font-weight: 700 !important;
-          }
-
-        /* Apply Montserrat font to a specific class and adjust margin */
-        .st-emotion-cache-nok2kl {
-            margin-bottom: -1rem !important;
-            font-family: 'Montserrat', sans-serif !important;
-        }
-      /* Apply Montserrat font and transparent color to all main text elements */
-        .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
-            color: transparent !important;
-            font-family: 'Montserrat', sans-serif !important;
-        }
-
-
-
-        
-        /* Hide specific header and buttons */
-        .stAppHeader,
-        .stToolbarActionButton,
-        ._terminalButton_rix23_138,
-        ._profileContainer_1yi6l_53,
-        ._container_1yi6l_1 {
-            display: none !important;
-        }
-
-        /* Adjust main container padding */
-        .st-emotion-cache-13ln4jf {
-            width: 100%;
-            padding: 0rem 1rem 10rem;
-            max-width: 46rem;
-        }
+        /* Additional styling to apply text color to all main text elements */
+        .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {{
+            color: {text_color} !important;
+        }}
     </style>
     """,
     unsafe_allow_html=True
