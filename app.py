@@ -38,7 +38,7 @@ st.markdown(
 
         /* Apply Montserrat font and transparent color to all main text elements */
         .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
-            color: red !important;
+            color: transparent !important;
             font-family: 'Montserrat', sans-serif !important;
         }
 
