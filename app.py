@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import textwrap
 
-
 # Get URL query parameters
 query_params = st.experimental_get_query_params()
 default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
@@ -75,22 +74,25 @@ selected_game = st.selectbox(
     format_func=lambda x: 'Select a game' if x == '' else x
 )
 
+# Check if a genre is provided
+selected_genre = st.text_input("Or type a genre to see recommendations:", '').strip().lower()
+
 # Recommendations
 if selected_game:
     link = 'https://en.wikipedia.org' + games_df[games_df.Title == selected_game].Link.values[0]
 
-    # DF query
+    # DF query for game-based recommendations
     matches = similarity_df[selected_game].sort_values()[1:6]
     matches = matches.index.tolist()
     matches = games_df.set_index('Title').loc[matches]
     matches.reset_index(inplace=True)
-    
+
     # Prepare response data
     response_data = matches[['Title', 'Genre', 'Developer', 'Publisher', 'Plots', 'Link']].to_dict(orient='records')
-    
-    # Results
+
+    # Results for selected game
     cols = ['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
-    
+
     st.markdown(f"# The recommended games for [{selected_game}]({link}) are:")
     for idx, row in matches.iterrows():
         st.markdown(f'### {idx + 1} - {row["Title"]}')
@@ -99,6 +101,25 @@ if selected_game:
         st.table(pd.DataFrame(row[cols]).T.set_index('Genre'))
         st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
 
+# Genre-based recommendations
+elif selected_genre:
+    # Fetching games that match the selected genre
+    matched_games = games_df[games_df['Genre'].str.lower() == selected_genre]
+    
+    if not matched_games.empty:
+        st.markdown(f"# Recommended games for genre: **{selected_genre}**")
+        # Sample 5 random games from the matched ones
+        sample_games = matched_games.sample(n=min(5, len(matched_games)))
+        
+        for idx, row in sample_games.iterrows():
+            st.markdown(f'### {idx + 1} - {row["Title"]}')
+            st.markdown(
+                '{} [[...]](https://en.wikipedia.org{})'.format(textwrap.wrap(row['Plots'][0:], 600)[0], row['Link']))
+            st.table(pd.DataFrame(row[cols]).T.set_index('Genre'))
+            st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
+    else:
+        st.error(f'No games found for the genre: {selected_genre}')
+
 else:
     st.markdown('# Game recommendation :video_game:')
     st.text('')
@@ -106,4 +127,4 @@ else:
     st.text('')
     st.markdown("This app lets you select a game from the dropdown menu and you'll get five recommendations that are the closest to your game according to the gameplay and/or plot.")
     st.text('')
-    st.warning(':point_left: Select a game from the dropdown menu!')
+    st.warning(':point_left: Select a game from the dropdown menu or type a genre for recommendations!')
