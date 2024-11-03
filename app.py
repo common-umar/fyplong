@@ -41,7 +41,9 @@ st.markdown(
             color: transparent !important;
             font-family: 'Montserrat', sans-serif !important;
         }
-
+        .stText{
+            color: red !important;
+        }
         
         /* Hide specific header and buttons */
         .stAppHeader,
