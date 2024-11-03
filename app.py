@@ -6,6 +6,7 @@ import textwrap
 query_params = st.experimental_get_query_params()
 default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
 mode = query_params.get('mode', ['light'])[0]  # Default to 'light' mode if 'mode' is not in query
+default_genre = query_params.get('genre', [''])[0]  # Default to an empty string if 'genre' is not in query
 
 # Custom CSS for light and dark mode
 if mode == 'dark':
@@ -74,10 +75,13 @@ selected_game = st.selectbox(
     format_func=lambda x: 'Select a game' if x == '' else x
 )
 
-# Check if a genre is provided
-selected_genre = st.text_input("Or type a genre to see recommendations:", '').strip().lower()
+# Check if a genre is provided through the URL
+if default_genre:
+    selected_genre = default_genre.strip().lower()
+else:
+    selected_genre = ''  # If no genre provided, default to empty
 
-# Recommendations
+# Recommendations based on game selection
 if selected_game:
     link = 'https://en.wikipedia.org' + games_df[games_df.Title == selected_game].Link.values[0]
 
@@ -109,13 +113,11 @@ elif selected_genre:
     if not matched_games.empty:
         st.markdown(f"# Recommended games for genre: **{selected_genre}**")
         # Sample 5 random games from the matched ones
-        sample_games = matched_games.sample(n=min(5, len(matched_games)))
-        
-        for idx, row in sample_games.iterrows():
+        for idx, row in matched_games.iterrows():
             st.markdown(f'### {idx + 1} - {row["Title"]}')
             st.markdown(
                 '{} [[...]](https://en.wikipedia.org{})'.format(textwrap.wrap(row['Plots'][0:], 600)[0], row['Link']))
-            st.table(pd.DataFrame(row[cols]).T.set_index('Genre'))
+            st.table(pd.DataFrame(row[['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']]).T.set_index('Genre'))
             st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
     else:
         st.error(f'No games found for the genre: {selected_genre}')
