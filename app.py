@@ -11,6 +11,37 @@ st.markdown(
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     
     <style>
+        /* Make background transparent */
+        .stApp {
+            background-color: transparent !important;
+        }
+
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif !important;
+            color: transparent !important;
+       }
+
+            /* Apply transparent background and Montserrat font to the entire body */
+            html, body, .stApp {
+                background-color: rgba(255, 255, 255, 0) !important;
+                color: red !important;
+                font-family: 'Montserrat', sans-serif !important;
+                font-weight: 700 !important;
+          }
+
+        /* Apply Montserrat font to a specific class and adjust margin */
+        .st-emotion-cache-nok2kl {
+            margin-bottom: -1rem !important;
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        /* Apply Montserrat font and transparent color to all main text elements */
+        .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
+            color: red !important;
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
         
         /* Hide specific header and buttons */
         .stAppHeader,
