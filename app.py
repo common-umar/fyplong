@@ -2,6 +2,12 @@ import streamlit as st
 import pandas as pd
 import textwrap
 
+
+# Get URL query parameters
+query_params = st.experimental_get_query_params()
+default_game = query_params.get('game', [''])[0]  # Default to an empty string if 'game' is not in query
+mode = query_params.get('mode', ['light'])[0]  # Default to 'light' mode if 'mode' is not in query
+
 # Custom CSS for light and dark mode
 if mode == 'dark':
     text_color = "#ffffff"  # Light text for dark mode
