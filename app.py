@@ -42,7 +42,7 @@ st.markdown(
         /* Additional styling to apply text color to all main text elements */
         .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {{
             color: {text_color} !important;
-        }
+        }}
 
         
         /* Hide specific header and buttons */
