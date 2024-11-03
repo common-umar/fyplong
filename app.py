@@ -35,37 +35,11 @@ st.markdown(
             margin-bottom: -1rem !important;
             font-family: 'Montserrat', sans-serif !important;
         }
-
-/* Apply Montserrat font to all elements, and assign simple colors for testing */
-.stApp {
-    color: red !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
-
-.stMarkdown {
-    color: green !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
-
-.stText {
-    color: blue !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
-
-.stTitle {
-    color: pink !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
-
-.stHeader {
-    color: orange !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
-
-.stCaption {
-    color: cyan !important;
-    font-family: 'Montserrat', sans-serif !important;
-}
+  /* Apply Montserrat font and transparent color to all main text elements */
+        .stApp, .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {
+            color: transparent !important;
+            font-family: 'Montserrat', sans-serif !important;
+        }
 
 .stWidget {
     color: purple !important;
