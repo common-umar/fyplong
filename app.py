@@ -45,21 +45,7 @@ st.markdown(
         }}
 
         
-        /* Hide specific header and buttons */
-        .stAppHeader,
-        .stToolbarActionButton,
-        ._terminalButton_rix23_138,
-        ._profileContainer_1yi6l_53,
-        ._container_1yi6l_1 {
-            display: none !important;
-        }
-
-        /* Adjust main container padding */
-        .st-emotion-cache-13ln4jf {
-            width: 100%;
-            padding: 0rem 1rem 10rem;
-            max-width: 46rem;
-        }
+   
     </style>
     """,
     unsafe_allow_html=True
