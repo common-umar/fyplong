@@ -25,7 +25,7 @@ st.markdown(
             /* Apply transparent background and Montserrat font to the entire body */
             html, body, .stApp {
                 background-color: rgba(255, 255, 255, 0) !important;
-                color: red !important;
+                color: transparent !important;
                 font-family: 'Montserrat', sans-serif !important;
                 font-weight: 700 !important;
           }
