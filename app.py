@@ -39,6 +39,16 @@ st.markdown(
         .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {{
             color: {text_color} !important;
         }}
+
+        /* Hide specific header and buttons */
+        .stAppHeader,
+        .stToolbarActionButton,
+        ._terminalButton_rix23_138,
+        ._profileContainer_1yi6l_53,
+        ._container_1yi6l_1 {{
+            display: none !important;
+        }}
+        
     </style>
     """,
     unsafe_allow_html=True
