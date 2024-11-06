@@ -42,6 +42,7 @@ default_game_lower = default_game.lower()
 # Check if a genre is provided through the URL
 selected_genre = default_genre.strip().lower() if default_genre else ''
 
+
 # Recommendations based on game selection
 if default_game:
     if default_game_lower in games_df['lower_title'].values:
@@ -59,6 +60,11 @@ if default_game:
             matches.reset_index(inplace=True)
 
             st.markdown(f"# The recommended games for [{selected_game_title}]({link}) are:")
+            # Display the selected game details in a table
+            cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries', 'Plots']
+            st.markdown(f"### Game details for {selected_game_title}:")
+            st.table(selected_game_data[cols].T)
+
             for idx, row in matches.iterrows():
                 st.markdown(f'### {idx + 1} - {row["Title"]}')
                 plot_text = row['Plots'] if pd.notna(row['Plots']) else "No plot information available."
@@ -87,9 +93,17 @@ elif selected_genre:
             wrapped_plot = textwrap.wrap(plot_text, 600)[0] if plot_text else "No plot information available."
             st.markdown(f'{wrapped_plot} [[...]](https://en.wikipedia.org{link_text})' if link_text else wrapped_plot)
             
+            # Display game details in a table
+            cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries', 'Plots']
+            st.table(row[cols].to_frame().T)
+
+            # Link to Wikipedia page if available
             st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{link_text})' if link_text else "No link available for this game.")
     else:
         st.error(f'No games found for the genre: {selected_genre}')
+
+
+
 
 else:
     st.markdown('# Game recommendation :video_game:')
