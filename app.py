@@ -78,13 +78,13 @@ else:
     default_index = 0  # Default to the first option ("Select a game")
 
 # Selectbox to choose game
-selected_game = st.selectbox(
-    'Select one among the 787 games from the menu: (you can type it as well)',
-    games_list,
-    index=default_index,
-    key='default',
-    format_func=lambda x: 'Select a game' if x == '' else x
-)
+#selected_game = st.selectbox(
+#   'Select one among the 787 games from the menu: (you can type it as well)',
+#    games_list,
+#    index=default_index,
+#    key='default',
+#    format_func=lambda x: 'Select a game' if x == '' else x
+#)
 
 # Check if a genre is provided through the URL
 selected_genre = default_genre.strip().lower() if default_genre else ''  # If no genre provided, default to empty
