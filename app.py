@@ -74,7 +74,7 @@ if default_game:
                 cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
                 st.markdown(f"### Game details for {selected_game_title}:")
                 st.table(selected_game_data[cols].T)  # The '.T' transposes the DataFrame, making it vertical
-                st.table(row[cols].to_frame().T)  # Display game data in a vertical table
+                st.table(row[cols].T)  # Display game data in a vertical table
                 st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
         else:
             st.error(f"Game '{selected_game_title}' not found in the recommendation database.")
