@@ -16,14 +16,31 @@ text_color = "#ffffff" if mode == 'dark' else "#000000"
 st.markdown(
     f"""
     <style>
-        .stApp {{ background-color: transparent !important; color: {text_color} !important; font-family: 'Montserrat', sans-serif; }}
-        h1, h2, h3, h4, h5, h6 {{ color: {text_color} !important; }}
-        .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {{ color: {text_color} !important; }}
-        .stAppHeader, .stToolbarActionButton, ._terminalButton_rix23_138, ._profileContainer_1yi6l_53, ._container_1yi6l_1 {{ display: none !important; }}
+        .stApp {{
+            background-color: transparent !important;
+            color: {text_color} !important;
+            font-family: 'Montserrat', sans-serif;
+        }}
+        h1, h2, h3, h4, h5, h6 {{
+            color: {text_color} !important;
+        }}
+        .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {{
+            color: {text_color} !important;
+        }}
+        .stAppHeader, .stToolbarActionButton, ._terminalButton_rix23_138, ._profileContainer_1yi6l_53, ._container_1yi6l_1 {{
+            display: none !important;
+        }}
+        /* Additional CSS for the element with class 'st-emotion-cache-13ln4jf' */
+        .st-emotion-cache-13ln4jf {{
+            width: 100%;
+            padding: 0rem 1rem 10rem;
+            max-width: 46rem;
+        }}
     </style>
     """,
     unsafe_allow_html=True
 )
+
 
 @st.cache_data(persist=True)
 def getdata():
