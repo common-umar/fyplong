@@ -16,6 +16,7 @@ text_color = "#ffffff" if mode == 'dark' else "#000000"
 st.markdown(
     f"""
     <style>
+        /* General app styling */
         .stApp {{
             background-color: transparent !important;
             color: {text_color} !important;
@@ -31,25 +32,38 @@ st.markdown(
             display: none !important;
         }}
         
-        /* Additional CSS for the element with class 'st-emotion-cache-13ln4jf' */
+        /* Additional styling for main layout container */
         .st-emotion-cache-13ln4jf {{
             width: 100%;
             padding: 0rem 1rem 10rem;
             max-width: 46rem;
         }}
         
-        /* Table styling */
+        /* Table styling based on theme */
+        /* Light Mode */
         .stTable, .stDataFrame {{
-            background-color: {text_color == '#ffffff' and '#ffffff' or '#212121'} !important; /* Adjust background based on mode */
-            color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Correct text color based on mode */
+            background-color: #ffffff !important;  /* Light background for the table */
+            color: #000000 !important;  /* Black text color for Light Mode */
         }}
-
         .stTable th, .stDataFrame th {{
-            background-color: {text_color == '#ffffff' and '#f0f0f0' or '#333333'} !important; /* Light or dark background for headers */
-            color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Dark or light text color for headers */
+            background-color: #f0f0f0 !important;  /* Light gray for table headers */
+            color: #000000 !important;  /* Black text for headers */
         }}
         .stTable td, .stDataFrame td {{
-            color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Text color for table data rows */
+            color: #000000 !important;  /* Black text for table cells */
+        }}
+        
+        /* Dark Mode */
+        .stTable.dark-mode, .stDataFrame.dark-mode {{
+            background-color: #212121 !important;  /* Dark background for the table */
+            color: #ffffff !important;  /* White text color for Dark Mode */
+        }}
+        .stTable.dark-mode th, .stDataFrame.dark-mode th {{
+            background-color: #333333 !important;  /* Dark gray for table headers */
+            color: #ffffff !important;  /* White text for headers */
+        }}
+        .stTable.dark-mode td, .stDataFrame.dark-mode td {{
+            color: #ffffff !important;  /* White text for table cells */
         }}
     </style>
     """,
