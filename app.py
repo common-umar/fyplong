@@ -69,32 +69,15 @@ games_df['lower_title'] = games_df['Title'].str.lower()
 # Fetch game from URL query parameters
 default_game_lower = default_game.lower()
 
-games_list = [''] + games_df['Title'].to_list()  # Include empty string for "Select a game" option
-
-# Find the index of the default game in the dataset
-if default_game_lower in games_df['lower_title'].values:
-    default_index = games_df['lower_title'].tolist().index(default_game_lower) + 1  # +1 for the empty string
-else:
-    default_index = 0  # Default to the first option ("Select a game")
-
-# Selectbox to choose game
-selected_game = st.selectbox(
-    'Select one among the 787 games from the menu: (you can type it as well)',
-    games_list,
-    index=default_index,
-    key='default',
-    format_func=lambda x: 'Select a game' if x == '' else x
-)
-
 # Check if a genre is provided through the URL
 selected_genre = default_genre.strip().lower() if default_genre else ''  # If no genre provided, default to empty
 
 # Recommendations based on game selection
-if selected_game:
-    link = 'https://en.wikipedia.org' + games_df[games_df.Title == selected_game].Link.values[0]
+if default_game:
+    link = 'https://en.wikipedia.org' + games_df[games_df.Title.str.lower() == default_game_lower].Link.values[0]
 
     # DF query for game-based recommendations
-    matches = similarity_df[selected_game].sort_values()[1:6]
+    matches = similarity_df[default_game].sort_values()[1:6]
     matches = matches.index.tolist()
     matches = games_df.set_index('Title').loc[matches]
     matches.reset_index(inplace=True)
@@ -105,7 +88,7 @@ if selected_game:
     # Results for selected game
     cols = ['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
 
-    st.markdown(f"# The recommended games for [{selected_game}]({link}) are:")
+    st.markdown(f"# The recommended games for [{default_game}]({link}) are:")
     for idx, row in matches.iterrows():
         st.markdown(f'### {idx + 1} - {row["Title"]}')
         st.markdown(
@@ -153,4 +136,4 @@ else:
     st.text('')
     st.markdown("This app lets you select a game from the dropdown menu and you'll get five recommendations that are the closest to your game according to the gameplay and/or plot.")
     st.text('')
-    st.warning(':point_left: Select a game from the dropdown menu or type a genre for recommendations!')
+    st.warning(':point_left: Enter a game or genre in the URL parameters for recommendations!')
