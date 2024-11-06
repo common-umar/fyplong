@@ -30,11 +30,26 @@ st.markdown(
         .stAppHeader, .stToolbarActionButton, ._terminalButton_rix23_138, ._profileContainer_1yi6l_53, ._container_1yi6l_1 {{
             display: none !important;
         }}
+        
         /* Additional CSS for the element with class 'st-emotion-cache-13ln4jf' */
         .st-emotion-cache-13ln4jf {{
             width: 100%;
             padding: 0rem 1rem 10rem;
             max-width: 46rem;
+        }}
+        
+        /* Table styling */
+        .stTable, .stDataFrame {{
+            background-color: {text_color == '#ffffff' and '#ffffff' or '#212121'} !important; /* Adjust background based on mode */
+            color: {text_color} !important; /* Ensure text is visible */
+        }}
+
+        .stTable th, .stDataFrame th {{
+            background-color: {text_color == '#ffffff' and '#f0f0f0' or '#333333'} !important; /* Light or dark background for headers */
+            color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Dark or light text color for headers */
+        }}
+        .stTable td, .stDataFrame td {{
+            color: {text_color} !important; /* Ensure data rows use the correct text color */
         }}
     </style>
     """,
