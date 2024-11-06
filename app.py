@@ -63,7 +63,8 @@ if default_game:
             # Display the selected game details in a table
             cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
             st.markdown(f"### Game details for {selected_game_title}:")
-            st.table(selected_game_data[cols].T)
+            #st.table(selected_game_data[cols].T)
+            st.table(row[cols].to_frame().T)
 
             for idx, row in matches.iterrows():
                 st.markdown(f'### {idx + 1} - {row["Title"]}')
@@ -95,6 +96,7 @@ elif selected_genre:
             
             # Display game details in a table
             cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
+#            st.table(row[cols].to_frame().T)
             st.table(row[cols].to_frame().T)
 
             # Link to Wikipedia page if available
