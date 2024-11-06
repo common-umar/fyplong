@@ -87,10 +87,7 @@ selected_game = st.selectbox(
 )
 
 # Check if a genre is provided through the URL
-if default_genre:
-    selected_genre = default_genre.strip().lower()
-else:
-    selected_genre = ''  # If no genre provided, default to empty
+selected_genre = default_genre.strip().lower() if default_genre else ''  # If no genre provided, default to empty
 
 # Recommendations based on game selection
 if selected_game:
@@ -115,8 +112,6 @@ if selected_game:
             '{} [[...]](https://en.wikipedia.org{})'.format(textwrap.wrap(row['Plots'][0:], 600)[0], row['Link']))
         st.table(pd.DataFrame(row[cols]).T.set_index('Genre'))
         st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
-
-import random
 
 # Genre-based recommendations
 elif selected_genre:
