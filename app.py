@@ -125,10 +125,23 @@ elif selected_genre:
         # Sample 5 random games from the matched ones
         for idx, row in matched_games.iterrows():
             st.markdown(f'### {idx + 1} - {row["Title"]}')
-            st.markdown(
-                '{} [[...]](https://en.wikipedia.org{})'.format(textwrap.wrap(row['Plots'][0:], 600)[0], row['Link']))
+            
+            # Ensure 'Plots' and 'Link' are available
+            plot_text = row['Plots'] if pd.notna(row['Plots']) else "No plot information available."
+            link_text = row['Link'] if pd.notna(row['Link']) else ""
+            
+            # Wrap plot text if available
+            wrapped_plot = textwrap.wrap(plot_text, 600)[0] if plot_text else "No plot information available."
+            st.markdown(f'{wrapped_plot} [[...]](https://en.wikipedia.org{link_text})' if link_text else wrapped_plot)
+            
+            # Show additional details in a table
             st.table(pd.DataFrame(row[['Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']]).T.set_index('Genre'))
-            st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
+            
+            # Link to Wikipedia page if available
+            if link_text:
+                st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{link_text})')
+            else:
+                st.markdown("No link available for this game.")
     else:
         st.error(f'No games found for the genre: {selected_genre}')
 
