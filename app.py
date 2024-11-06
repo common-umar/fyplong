@@ -115,14 +115,19 @@ if selected_game:
         st.table(pd.DataFrame(row[cols]).T.set_index('Genre'))
         st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
 
+import random
+
 # Genre-based recommendations
 elif selected_genre:
-    # Fetching games that match the selected genre
+    # Fetch games that match the selected genre
     matched_games = games_df[games_df['Genre'].str.lower() == selected_genre]
     
     if not matched_games.empty:
+        # Randomly sample 5 games if there are more than 5 matches
+        matched_games = matched_games.sample(n=min(5, len(matched_games)), random_state=random.randint(0, 100))
+        
         st.markdown(f"# Recommended games for genre: **{selected_genre}**")
-        # Sample 5 random games from the matched ones
+        
         for idx, row in matched_games.iterrows():
             st.markdown(f'### {idx + 1} - {row["Title"]}')
             
