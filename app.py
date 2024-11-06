@@ -65,11 +65,18 @@ if default_game:
             st.markdown(f"### Game details for {selected_game_title}:")
             st.table(selected_game_data[cols].T)
 
-            for idx, row in matches.iterrows():
-                st.markdown(f'### {idx + 1} - {row["Title"]}')
-                plot_text = row['Plots'] if pd.notna(row['Plots']) else "No plot information available."
-                st.markdown('{} [[...]](https://en.wikipedia.org{})'.format(textwrap.wrap(plot_text, 600)[0], row['Link']))
-                st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
+# Collect the recommended game details into a DataFrame for vertical table display
+recommended_games = []
+for idx, row in matches.iterrows():
+    # Add details of each recommended game to the list
+    recommended_games.append(row[['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']])
+
+# Convert the list of recommended game details into a DataFrame
+recommended_df = pd.DataFrame(recommended_games)
+
+# Display all recommended game details as a table
+st.markdown(f"### Recommended games for {selected_game_title}:")
+st.table(recommended_df.T)  # Displaying the table vertically (transposed)
         else:
             st.error(f"Game '{selected_game_title}' not found in the recommendation database.")
     else:
