@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import textwrap
+import random
 
 # Get URL query parameters
 query_params = st.experimental_get_query_params()
