@@ -60,25 +60,20 @@ if default_game:
             matches.reset_index(inplace=True)
 
             st.markdown(f"# The recommended games for [{selected_game_title}]({link}) are:")
-            
-            # Display the selected game details in a table
-            cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
-            st.markdown(f"### Game details for {selected_game_title}:")
-            st.table(selected_game_data[cols].T)
-            
-            # Collect the recommended game details into a DataFrame for vertical table display
-            recommended_games = []
+
             for idx, row in matches.iterrows():
-                # Add details of each recommended game to the list
-                recommended_games.append(row[['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']])
-
-            # Convert the list of recommended game details into a DataFrame
-            recommended_df = pd.DataFrame(recommended_games)
-
-            # Display all recommended game details as a table
-            st.markdown(f"### Recommended games for {selected_game_title}:")
-            st.table(recommended_df.T)  # Displaying the table vertically (transposed)
-            
+                st.markdown(f'### {idx + 1} - {row["Title"]}')
+                
+                # Display the plot (if available)
+                plot_text = row['Plots'] if pd.notna(row['Plots']) else "No plot information available."
+                link_text = row['Link'] if pd.notna(row['Link']) else ""
+                wrapped_plot = textwrap.wrap(plot_text, 600)[0] if plot_text else "No plot information available."
+                st.markdown(f'{wrapped_plot} [[...]](https://en.wikipedia.org{link_text})' if link_text else wrapped_plot)
+                
+                # Display the game details in a vertical table (excluding the plot)
+                cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
+                st.table(row[cols].to_frame().T)  # Display game data in a vertical table
+                st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
         else:
             st.error(f"Game '{selected_game_title}' not found in the recommendation database.")
     else:
