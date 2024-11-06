@@ -49,7 +49,7 @@ st.markdown(
             color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Dark or light text color for headers */
         }}
         .stTable td, .stDataFrame td {{
-            color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Ensure data rows use the correct text color */
+            color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Text color for table data rows */
         }}
     </style>
     """,
