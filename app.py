@@ -61,7 +61,7 @@ if default_game:
 
             st.markdown(f"# The recommended games for [{selected_game_title}]({link}) are:")
             # Display the selected game details in a table
-            cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries', 'Plots']
+            cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
             st.markdown(f"### Game details for {selected_game_title}:")
             st.table(selected_game_data[cols].T)
 
@@ -94,7 +94,7 @@ elif selected_genre:
             st.markdown(f'{wrapped_plot} [[...]](https://en.wikipedia.org{link_text})' if link_text else wrapped_plot)
             
             # Display game details in a table
-            cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries', 'Plots']
+            cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
             st.table(row[cols].to_frame().T)
 
             # Link to Wikipedia page if available
