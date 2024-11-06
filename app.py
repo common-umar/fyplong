@@ -41,7 +41,7 @@ st.markdown(
         /* Table styling */
         .stTable, .stDataFrame {{
             background-color: {text_color == '#ffffff' and '#ffffff' or '#212121'} !important; /* Adjust background based on mode */
-            color: {text_color} !important; /* Ensure text is visible */
+            color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Correct text color based on mode */
         }}
 
         .stTable th, .stDataFrame th {{
@@ -49,7 +49,7 @@ st.markdown(
             color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Dark or light text color for headers */
         }}
         .stTable td, .stDataFrame td {{
-            color: {text_color} !important; /* Ensure data rows use the correct text color */
+            color: {text_color == '#ffffff' and '#000000' or '#ffffff'} !important; /* Ensure data rows use the correct text color */
         }}
     </style>
     """,
