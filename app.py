@@ -72,6 +72,8 @@ if default_game:
                 
                 # Display the game details in a vertical table (excluding the plot)
                 cols = ['Title', 'Genre', 'Developer', 'Publisher', 'Released in: Japan', 'North America', 'Rest of countries']
+                st.markdown(f"### Game details for {selected_game_title}:")
+                st.table(selected_game_data[cols].T)  # The '.T' transposes the DataFrame, making it vertical
                 st.table(row[cols].to_frame().T)  # Display game data in a vertical table
                 st.markdown(f'Link to wiki page: [{row["Title"]}](https://en.wikipedia.org{row["Link"]})')
         else:
