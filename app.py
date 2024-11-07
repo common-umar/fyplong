@@ -16,6 +16,10 @@ text_color = "#ffffff" if mode == 'dark' else "#000000"
 st.markdown(
     f"""
     <style>
+        /* Hide the app creator avatar image */
+        ._profileImage_51w34_76 {{
+            display: none !important;
+        }}
         /* Hide the profile preview container */
         ._profilePreview_51w34_63 {{
             display: none !important;
