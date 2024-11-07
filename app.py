@@ -13,7 +13,6 @@ default_genre = query_params.get('genre', [''])[0]  # Default to an empty string
 text_color = "#ffffff" if mode == 'dark' else "#000000"
 
 # Apply CSS styling based on the mode
-# Apply dynamic CSS for tables based on mode
 st.markdown(
     f"""
     <style>
@@ -23,6 +22,16 @@ st.markdown(
             color: {text_color} !important;
             font-family: 'Montserrat', sans-serif;
         }}
+        body {{
+            background-color: transparent !important;
+        }}
+        
+        /* Target main content area to ensure transparency */
+        .css-1d391kg, .css-1gk9na3 {{
+            background-color: transparent !important;
+        }}
+        
+        /* Header and text colors */
         h1, h2, h3, h4, h5, h6 {{
             color: {text_color} !important;
         }}
@@ -41,35 +50,31 @@ st.markdown(
         }}
         
         /* Table styling based on theme */
-        /* Light Mode */
         .stTable, .stDataFrame {{
-            background-color: #ffffff !important;  /* Light background for the table */
-            color: #000000 !important;  /* Black text color for Light Mode */
+            background-color: rgba(255, 255, 255, 0.0) !important;  /* Transparent table background */
+            color: {text_color} !important;  /* Text color based on mode */
         }}
         .stTable th, .stDataFrame th {{
-            background-color: #f0f0f0 !important;  /* Light gray for table headers */
-            color: #000000 !important;  /* Black text for headers */
+            background-color: rgba(0, 0, 0, 0.05) !important;  /* Subtle shaded background for headers */
+            color: {text_color} !important;  /* Text color for headers */
         }}
         .stTable td, .stDataFrame td {{
-            color: #000000 !important;  /* Black text for table cells */
+            color: {text_color} !important;  /* Text color for table cells */
         }}
         
-        /* Dark Mode */
+        /* Dark Mode adjustments */
         .stTable.dark-mode, .stDataFrame.dark-mode {{
-            background-color: #212121 !important;  /* Dark background for the table */
-            color: #ffffff !important;  /* White text color for Dark Mode */
+            background-color: rgba(33, 33, 33, 0.0) !important;  /* Transparent dark mode table */
         }}
         .stTable.dark-mode th, .stDataFrame.dark-mode th {{
-            background-color: #333333 !important;  /* Dark gray for table headers */
-            color: #ffffff !important;  /* White text for headers */
-        }}
-        .stTable.dark-mode td, .stDataFrame.dark-mode td {{
-            color: #ffffff !important;  /* White text for table cells */
+            background-color: rgba(255, 255, 255, 0.1) !important;  /* Subtle shade for dark mode headers */
         }}
     </style>
     """,
     unsafe_allow_html=True
 )
+
+
 @st.cache_data(persist=True)
 def getdata():
     games_df = pd.read_csv('Games_dataset.csv', index_col=0)
