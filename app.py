@@ -17,7 +17,7 @@ text_color = "#ffffff" if mode == 'dark' else "#000000"
 st.markdown(
     f"""
     <style>
-        /* General App Styling */
+        /* General app styling */
         .stApp {{
             background-color: transparent !important;
             color: {text_color} !important;
@@ -26,6 +26,12 @@ st.markdown(
         h1, h2, h3, h4, h5, h6 {{
             color: {text_color} !important;
         }}
+        .stMarkdown, .stText, .stTitle, .stHeader, .stCaption, .stWidget, .stButton {{
+            color: {text_color} !important;
+        }}
+        .stAppHeader, .stToolbarActionButton, ._terminalButton_rix23_138, ._profileContainer_1yi6l_53, ._container_1yi6l_1 {{
+            display: none !important;
+        }}
         
         /* Additional styling for main layout container */
         .st-emotion-cache-13ln4jf {{
@@ -33,37 +39,37 @@ st.markdown(
             padding: 0rem 1rem 10rem;
             max-width: 46rem;
         }}
-
-        /* Light Mode Table Styling */
-        .stTable.light-mode, .stDataFrame.light-mode {{
-            background-color: #ffffff !important;  /* White background for the table */
-            color: #000000 !important;  /* Black text for Light Mode */
+        
+        /* Table styling based on theme */
+        /* Light Mode */
+        .stTable, .stDataFrame {{
+            background-color: #ffffff !important;  /* Light background for the table */
+            color: #000000 !important;  /* Black text color for Light Mode */
         }}
-        .stTable.light-mode th, .stDataFrame.light-mode th {{
-            background-color: #f0f0f0 !important;  /* Light gray header */
-            color: #000000 !important;  /* Black text for header */
+        .stTable th, .stDataFrame th {{
+            background-color: #f0f0f0 !important;  /* Light gray for table headers */
+            color: #000000 !important;  /* Black text for headers */
         }}
-        .stTable.light-mode td, .stDataFrame.light-mode td {{
-            color: #000000 !important;  /* Black text for cells */
+        .stTable td, .stDataFrame td {{
+            color: #000000 !important;  /* Black text for table cells */
         }}
         
-        /* Dark Mode Table Styling */
+        /* Dark Mode */
         .stTable.dark-mode, .stDataFrame.dark-mode {{
-            background-color: #212121 !important;  /* Dark background for table */
-            color: #ffffff !important;  /* White text for Dark Mode */
+            background-color: #212121 !important;  /* Dark background for the table */
+            color: #ffffff !important;  /* White text color for Dark Mode */
         }}
         .stTable.dark-mode th, .stDataFrame.dark-mode th {{
-            background-color: #333333 !important;  /* Dark gray header */
-            color: #ffffff !important;  /* White text for header */
+            background-color: #333333 !important;  /* Dark gray for table headers */
+            color: #ffffff !important;  /* White text for headers */
         }}
         .stTable.dark-mode td, .stDataFrame.dark-mode td {{
-            color: #ffffff !important;  /* White text for cells */
+            color: #ffffff !important;  /* White text for table cells */
         }}
     </style>
     """,
     unsafe_allow_html=True
 )
-
 @st.cache_data(persist=True)
 def getdata():
     games_df = pd.read_csv('Games_dataset.csv', index_col=0)
