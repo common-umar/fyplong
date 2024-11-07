@@ -16,6 +16,15 @@ text_color = "#ffffff" if mode == 'dark' else "#000000"
 st.markdown(
     f"""
     <style>
+        /* Hide the profile container */
+        ._profileContainer_51w34_53 {{
+            display: none !important;
+        }}
+        
+        /* Hide the viewer badge */
+        ._container_51w34_1._viewerBadge_nim44_23 {{
+            display: none !important;
+        }}
         /* General app styling */
         .stApp {{
             background-color: transparent !important;
